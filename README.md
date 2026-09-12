@@ -1,0 +1,181 @@
+﻿Updated README
+# 🏡 Air-bnb Clone
+
+A full-stack Airbnb-inspired web application that allows users to browse, create, edit, and manage property listings with secure authentication, cloud image storage, and interactive maps.
+
+## 🚀 Features
+
+### 🔐 Authentication & Authorization
+
+* User registration and login
+* Secure authentication using Passport.js
+* Session-based authentication
+* Protected routes for authorized users
+
+### 🏠 Property Listings
+
+* Create new listings
+* View listing details
+* Edit existing listings
+* Delete listings
+* Responsive property cards and details pages
+
+### 📸 Image Uploads
+
+* Upload property images
+* Cloudinary cloud storage integration
+* Multer-based file handling
+
+### 🗺️ Maps & Location Services
+
+* Interactive property locations
+* Mapbox integration for geolocation
+
+### ✅ Validation & Security
+
+* Server-side validation using Joi
+* Session management
+* Flash messages for user feedback
+* Environment variable protection with Dotenv
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* EJS
+* EJS-Mate
+* HTML5
+* CSS3
+* JavaScript
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Authentication
+
+* Passport.js
+* Passport Local Strategy
+* Passport Local Mongoose
+
+### Cloud Services
+
+* Cloudinary
+* Multer
+* Multer Storage Cloudinary
+
+### Maps
+
+* Mapbox SDK
+
+---
+
+## 📂 Project Structure
+
+```text
+Major_Project1
+│
+├── controllers/
+├── models/
+├── routes/
+├── views/
+├── public/
+├── uploads/
+├── utils/
+│
+├── app.js
+├── cloudConfig.js
+├── middleware.js
+├── schema.js
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/KushagraSri87/Air-bnb-clone.git
+cd Air-bnb-clone
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Configure Environment Variables
+
+Create a `.env` file:
+
+```env
+ATLASDB_URL=your_mongodb_connection_string
+
+SECRET=your_session_secret
+
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
+
+MAP_TOKEN=your_mapbox_access_token
+```
+
+### Start Application
+
+```bash
+node app.js
+```
+
+
+
+(Adjust the port if configured differently.)
+
+---
+
+## 📸 Screenshots
+
+Add screenshots here:
+
+* Homepage
+* Listing Details Page
+* Create Listing Page
+* Login/Register Page
+* Map View
+
+---
+
+## 🎯 Future Improvements
+
+* Booking functionality
+* User reviews and ratings
+* Wishlist feature
+* Advanced search filters
+* Payment gateway integration
+* Admin dashboard
+* Real-time notifications
+
+---
+
+## 👨‍💻 Author
+
+**Kushagra Srivastava**
+
+GitHub: https://github.com/KushagraSri87
+
+---
+
+## 📄 License
+
+This project is intended for educational and learning purposes.
