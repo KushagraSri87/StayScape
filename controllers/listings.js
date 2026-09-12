@@ -66,7 +66,14 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }); // deconstruct by (...) for individual parameters
+  // { new: true } is required here - without it, findByIdAndUpdate returns the
+  // PRE-update document, and the .save() below would overwrite the DB with those
+  // stale field values (only the image change would actually stick).
+  let listing = await Listing.findByIdAndUpdate(
+    id,
+    { ...req.body.listing },
+    { new: true },
+  ); // deconstruct by (...) for individual parameters
 
   if (typeof req.file !== "undefined") {
     // use to prevent edit listing without giving img
