@@ -25,7 +25,7 @@ const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
 const myBookingsRouter = require("./routes/mybookings.js");
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/stayScape"; // for local db
 
 const dbUrl = process.env.ATLASDB_URL;
 
