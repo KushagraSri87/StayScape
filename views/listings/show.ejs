@@ -94,6 +94,52 @@
       <% } %>
     </div> 
 
+    <div class="col-8 offset-3 mt-3">
+      <hr>
+      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+        <h4>Upcoming bookings for this listing</h4>
+        <% if(bookings.length === 0) { %>
+          <p class="text-muted">No upcoming bookings yet.</p>
+        <% } else { %>
+          <ul class="list-group mb-3">
+            <% for(let b of bookings) { %>
+              <li class="list-group-item">
+                <b><%= b.guest.username %></b> —
+                <%= b.checkIn.toDateString() %> to <%= b.checkOut.toDateString() %>
+                (<%= b.nights %> night<%= b.nights > 1 ? "s" : "" %>,
+                &#8377;<%= b.totalPrice.toLocaleString("en-IN") %>)
+              </li>
+            <% } %>
+          </ul>
+        <% } %>
+      <% } else if(currUser) { %>
+        <h4>Book this stay</h4>
+        <% if(bookings.length > 0) { %>
+          <p class="text-muted">
+            Already booked:
+            <% for(let b of bookings) { %>
+              <%= b.checkIn.toDateString() %>&ndash;<%= b.checkOut.toDateString() %><%= bookings.indexOf(b) < bookings.length - 1 ? ", " : "" %>
+            <% } %>
+          </p>
+        <% } %>
+        <form action="/listings/<%= listing._id %>/bookings" method="POST" class="row g-2 needs-validation" novalidate>
+          <div class="col-auto">
+            <label for="checkIn" class="form-label">Check-in</label>
+            <input type="date" class="form-control" id="checkIn" name="booking[checkIn]" required>
+          </div>
+          <div class="col-auto">
+            <label for="checkOut" class="form-label">Check-out</label>
+            <input type="date" class="form-control" id="checkOut" name="booking[checkOut]" required>
+          </div>
+          <div class="col-auto align-self-end">
+            <button class="btn btn-outline-dark">Book Now</button>
+          </div>
+        </form>
+      <% } else { %>
+        <p><a href="/login">Log in</a> to book this stay.</p>
+      <% } %>
+    </div>
+
     <div class="col-8 offset-3 mt-3 mb-5">
       <h3>Where you'll be</h3>
       <div id="map"></div>
