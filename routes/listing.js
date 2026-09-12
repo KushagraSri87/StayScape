@@ -19,7 +19,7 @@ router
     wrapAsync(listingController.createListing),
   ); // Create Route
 
-router.get("/search", listingController.searchByCountry); // it is used for search option in wanderlust
+router.get("/search", listingController.searchByCountry); // it is used for search option in StayScape
 
 // New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
