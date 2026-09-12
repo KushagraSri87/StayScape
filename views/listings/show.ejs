@@ -5,8 +5,15 @@
 </script>
 
 <div class="row">
-  <div class="col-8 offset-3 mt-3">
+  <div class="col-8 offset-3 mt-3 d-flex justify-content-between align-items-center">
     <h3><%= listing.title %></h3>
+    <% if(currUser && !listing.owner._id.equals(currUser._id)) { %>
+      <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+        <button class="btn btn-outline-danger">
+          <%= isWishlisted ? "♥ Saved" : "♡ Save" %>
+        </button>
+      </form>
+    <% } %>
   </div>
 
     <div class="card col-6 offset-3 mt-2 show-card listing-card ">
