@@ -7,7 +7,7 @@ A full-stack, Airbnb-style travel listing app. Users can sign up, list a place t
 - **Auth** — signup/login/logout via Passport.js (`passport-local-mongoose`), sessions stored in MongoDB
 - **Listings** — full CRUD, owner-only edit/delete, Joi-validated input
 - **Image upload** — Multer streams uploads straight to Cloudinary
-- **Geolocation** — Mapbox geocodes each listing's address into coordinates, rendered on an interactive map
+- **Geolocation** — OpenCage geocodes each listing's address into coordinates, rendered on an interactive Leaflet/OpenStreetMap map
 - **Reviews** — star ratings + comments, author-only delete
 - **Search** — filter listings by country
 - **Bookings** *(new)* — pick check-in/check-out dates on a listing; the server rejects overlapping bookings; guests get a "My Trips" page; owners see who's booked their place
@@ -21,12 +21,12 @@ A full-stack, Airbnb-style travel listing app. Users can sign up, list a place t
 | Database | MongoDB + Mongoose |
 | Auth | Passport.js, express-session, connect-mongo |
 | File storage | Cloudinary + Multer |
-| Maps | Mapbox SDK |
+| Maps | OpenCage (geocoding) + Leaflet/OpenStreetMap (map display) |
 | Validation | Joi |
 
 ## 🏗️ Architecture
 
-The app follows the standard **MVC** pattern. A request comes in, passes through auth/validation middleware, hits a controller, which reads/writes MongoDB via a Mongoose model and renders an EJS view (or hands off to Cloudinary/Mapbox for uploads and geocoding).
+The app follows the standard **MVC** pattern. A request comes in, passes through auth/validation middleware, hits a controller, which reads/writes MongoDB via a Mongoose model and renders an EJS view (or hands off to Cloudinary for uploads and OpenCage for geocoding).
 
 ```mermaid
 flowchart TD
@@ -41,7 +41,7 @@ flowchart TD
     Views["EJS Views<br/>listings/ · users/ · bookings/"]
     DB[("MongoDB<br/>Listing · User · Review · Booking")]
     Cloudinary["Cloudinary<br/>(image storage)"]
-    Mapbox["Mapbox API<br/>(geocoding + map render)"]
+    OpenCage["OpenCage API<br/>(geocoding only)"]
 
     Browser -->|"HTTP request"| Router
     Router --> MW
@@ -49,7 +49,7 @@ flowchart TD
     MW -->|"fails: redirect + flash"| Browser
     Ctrl -->|"Mongoose queries"| DB
     Ctrl -->|"upload.single()"| Cloudinary
-    Ctrl -->|"forwardGeocode()"| Mapbox
+    Ctrl -->|"geocodeLocation()"| OpenCage
     Ctrl -->|"res.render()"| Views
     Views -->|"HTML response"| Browser
 ```
@@ -63,7 +63,7 @@ sequenceDiagram
     participant M as Middleware
     participant C as Controller
     participant Cl as Cloudinary
-    participant Mb as Mapbox
+    participant Oc as OpenCage
     participant DB as MongoDB
 
     U->>R: Submit new listing form + photo
@@ -73,8 +73,8 @@ sequenceDiagram
     M->>Cl: stream file
     Cl-->>M: hosted image URL
     R->>C: createListing(req, res)
-    C->>Mb: forwardGeocode(location)
-    Mb-->>C: coordinates
+    C->>Oc: geocodeLocation(location)
+    Oc-->>C: coordinates
     C->>DB: new Listing({...}).save()
     DB-->>C: saved document
     C-->>U: redirect to /listings
@@ -115,7 +115,7 @@ WanderLust/
 
 ## ⚙️ Local Setup
 
-**Requirements:** Node.js 20+, a MongoDB connection string (Atlas free tier works), a Cloudinary account, a Mapbox access token.
+**Requirements:** Node.js 20+, a MongoDB connection string (Atlas free tier works), a Cloudinary account, an OpenCage API key (free, no credit card required).
 
 ```bash
 git clone <your-repo-url>
@@ -131,7 +131,7 @@ SECRET=any_random_session_secret
 CLOUD_NAME=your_cloudinary_cloud_name
 CLOUD_API_KEY=your_cloudinary_api_key
 CLOUD_API_SECRET=your_cloudinary_api_secret
-MAP_TOKEN=your_mapbox_access_token
+OPENCAGE_API_KEY=your_opencage_api_key
 ```
 
 Run it:
