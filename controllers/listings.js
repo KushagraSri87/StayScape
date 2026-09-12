@@ -55,7 +55,14 @@ module.exports.showListing = async (req, res) => {
     .populate("guest")
     .sort({ checkIn: 1 });
 
-  res.render("listings/show.ejs", { listing, bookings });
+    let isWishlisted = false;
+  if (req.user) {
+    isWishlisted = req.user.wishlist.some((listingId) =>
+      listingId.equals(listing._id),
+    );
+  }
+
+  res.render("listings/show.ejs", { listing, bookings, isWishlisted });
 };
 
 module.exports.createListing = async (req, res, next) => {
