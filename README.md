@@ -1,4 +1,4 @@
-# 🏡 WanderLust
+# 🏡 StayScape
 
 A full-stack, Airbnb-style travel listing app. Users can sign up, list a place to stay, upload photos, leave reviews, and now **book real date ranges** with server-side availability checking.
 
@@ -83,7 +83,7 @@ sequenceDiagram
 ## 📂 Project Structure
 
 ```
-WanderLust/
+StayScape/
 ├── app.js                 # entry point, middleware & route mounting
 ├── cloudConfig.js         # Cloudinary + multer-storage-cloudinary setup
 ├── middleware.js          # auth guards, ownership checks, Joi validation
@@ -119,7 +119,7 @@ WanderLust/
 
 ```bash
 git clone <your-repo-url>
-cd WanderLust
+cd StayScape
 npm install
 ```
 
