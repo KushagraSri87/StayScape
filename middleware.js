@@ -1,7 +1,8 @@
 const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
+const Booking = require("./models/booking.js");
 const ExpressError = require("./utils/ExpressError.js");  
-const { listingSchema, reviewSchema } = require("./schema.js");
+const { listingSchema, reviewSchema, bookingSchema } = require("./schema.js");
 const review = require("./models/review.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -59,6 +60,30 @@ module.exports.validateReview = (req, res, next) => {
     }
 };
 
+
+module.exports.validateBooking = (req, res, next) => {
+    let { error } = bookingSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
+
+module.exports.isBookingOwner = async (req, res, next) => {
+    let { bookingId } = req.params;
+    let booking = await Booking.findById(bookingId);
+    if(!booking){
+        req.flash("error", "Booking not found");
+        return res.redirect("/bookings");
+    }
+    if(!booking.guest.equals(res.locals.currUser._id)) {
+        req.flash("error", "You are not the owner of this booking");
+        return res.redirect("/bookings");
+    }
+    next();
+};
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     let { id, reviewId } = req.params;                            // id is for listing not for review, every review had their own id that is  reviewId
