@@ -13,7 +13,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.16.2",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^6.0.0",

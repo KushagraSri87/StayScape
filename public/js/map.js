@@ -1,21 +1,18 @@
-mapboxgl.accessToken = mapToken;
+// Leaflet + OpenStreetMap - free, no API key or billing required.
+// listing.geometry.coordinates is stored as GeoJSON [lng, lat];
+// Leaflet expects [lat, lng], so we flip the order below.
+const [lng, lat] = listing.geometry.coordinates;
 
-const map = new mapboxgl.Map({
-  container: "map", // container ID
-  center: listing.geometry.coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
-  zoom: 9, // starting zoom
-});
+const map = L.map("map").setView([lat, lng], 9);
 
-const marker1 = new mapboxgl.Marker({ color: "red" })
-  .setLngLat(listing.geometry.coordinates) // Listing.geometry.coordinates
-  .setPopup(
-    new mapboxgl.Popup({ offset: 25 }).setHTML(
-      `<h4>${listing.title}</h4> <p> Exact location will be
-      provided after booking </p>`,
-    ),
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap contributors",
+  maxZoom: 19,
+}).addTo(map);
+
+L.marker([lat, lng])
+  .addTo(map)
+  .bindPopup(
+    `<h4>${listing.title}</h4><p>Exact location will be provided after booking</p>`,
   )
-  .addTo(map);
-
-// const marker1 = new mapboxgl.Marker({ color: "red" })
-//   .setLngLat(coordinates) // Listing.geometry.coordinates
-//   .addTo(map);
+  .openPopup();

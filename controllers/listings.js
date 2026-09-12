@@ -1,8 +1,23 @@
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding"); // needs installation
-const mapToken = process.env.MAP_TOKEN;
-const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
+// OpenCage geocoding - free tier, no credit card required (unlike Mapbox's
+// billing setup). Node 20+ has fetch() built in, no extra package needed.
+const OPENCAGE_KEY = process.env.OPENCAGE_API_KEY;
+
+async function geocodeLocation(query) {
+  let url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+    query,
+  )}&key=${OPENCAGE_KEY}&limit=1`;
+  let response = await fetch(url);
+  let data = await response.json();
+  if (!data.results || data.results.length === 0) {
+    throw new Error(`Could not find coordinates for "${query}"`);
+  }
+  let { lat, lng } = data.results[0].geometry;
+  // keep the same GeoJSON [lng, lat] shape the schema already expects
+  return { type: "Point", coordinates: [lng, lat] };
+}
 
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -46,18 +61,13 @@ module.exports.showListing = async (req, res) => {
 module.exports.createListing = async (req, res, next) => {
   // here isLoggedIn used because of securing create listing from any tool or Azax request
 
-  let response = await geocodingClient
-    .forwardGeocode({
-      query: req.body.listing.location,
-      limit: 1,
-    })
-    .send();
+  let geometry = await geocodeLocation(req.body.listing.location);
   let url = req.file.path;
   let filename = req.file.filename;
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
-  newListing.geometry = response.body.features[0].geometry;
+  newListing.geometry = geometry;
   await newListing.save();
   req.flash("success", "New Listing Created");
   res.redirect("/listings");
