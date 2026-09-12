@@ -24,6 +24,8 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
 const myBookingsRouter = require("./routes/mybookings.js");
+const wishlistRouter = require("./routes/wishlist.js");
+const myWishlistRouter = require("./routes/mywishlist.js");
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/stayScape"; // for local db
 
@@ -111,6 +113,8 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/listings/:id/bookings", bookingRouter);
 app.use("/bookings", myBookingsRouter);
+app.use("/listings/:id/wishlist", wishlistRouter);
+app.use("/wishlist", myWishlistRouter);
 app.use("/", userRouter);
 
 app.use((req, res, next) => {
