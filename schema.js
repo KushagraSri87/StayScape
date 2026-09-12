@@ -18,6 +18,14 @@ module.exports.reviewSchema = Joi.object({
   }).required(),
 });
 
+module.exports.bookingSchema = Joi.object({
+  booking: Joi.object({
+    checkIn: Joi.date().required(),
+    checkOut: Joi.date().greater(Joi.ref("checkIn")).required()
+      .messages({ "date.greater": "Check-out must be after check-in" }),
+  }).required(),
+});
+
 // const listingSchema = Joi.object({
 //   listing : Joi.object({
 //     title: Joi.string().required(),
