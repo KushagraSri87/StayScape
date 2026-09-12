@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding"); // needs installation
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
@@ -27,8 +28,19 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing you requested for does not exist ");
     return res.redirect("/listings");
   }
-  console.log(listing);
-  res.render("listings/show.ejs", { listing });
+
+  // Upcoming bookings for this listing - shown to everyone as "unavailable"
+  // date ranges, and shown in full (with guest name) only to the owner.
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let bookings = await Booking.find({
+    listing: listing._id,
+    checkOut: { $gte: today },
+  })
+    .populate("guest")
+    .sort({ checkIn: 1 });
+
+  res.render("listings/show.ejs", { listing, bookings });
 };
 
 module.exports.createListing = async (req, res, next) => {
