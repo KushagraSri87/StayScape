@@ -30,7 +30,9 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 module.exports.isOwner = async (req, res, next) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);                   // requiring listing is mandatory is to access listings
-    if(!listing.owner._id.equals(res.locals.currUser._id)) {
+    // NOTE: owner is NOT populated here, so it's a raw ObjectId - it has no ._id field.
+    // Comparing it directly (instead of listing.owner._id) is what fixes edit/delete 500s.
+    if(!listing.owner.equals(res.locals.currUser._id)) {
         req.flash("error", "You are not the owner of the listing");
         return res.redirect(`/listings/${ id }`);
     }
