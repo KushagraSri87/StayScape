@@ -28,10 +28,17 @@ const bookingSchema = new Schema({
     type: Number,
     required: true,
   },
+  razorpayOrderId: {
+    type: String,
+    required: true,
+  },
+  razorpayPaymentId: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
-
 module.exports = mongoose.model("Booking", bookingSchema);
