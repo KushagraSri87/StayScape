@@ -124,3 +124,4 @@ module.exports.cancelBooking = async (req, res) => {
   req.flash("success", "Booking cancelled");
   res.redirect("/bookings");
 };
+
