@@ -128,19 +128,21 @@
             <% } %>
           </p>
         <% } %>
-        <form action="/listings/<%= listing._id %>/bookings" method="POST" class="row g-2 needs-validation" novalidate>
+        <div id="booking-error" class="text-danger mb-2"></div>
+        <div class="row g-2">
           <div class="col-auto">
             <label for="checkIn" class="form-label">Check-in</label>
-            <input type="date" class="form-control" id="checkIn" name="booking[checkIn]" required>
+            <input type="date" class="form-control" id="checkIn" required>
           </div>
           <div class="col-auto">
             <label for="checkOut" class="form-label">Check-out</label>
-            <input type="date" class="form-control" id="checkOut" name="booking[checkOut]" required>
+            <input type="date" class="form-control" id="checkOut" required>
           </div>
           <div class="col-auto align-self-end">
-            <button class="btn btn-outline-dark">Book Now</button>
+            <button id="book-now-btn" class="btn btn-outline-dark">Book Now</button>
           </div>
-        </form>
+        </div>
+        <script src="/js/bookingCheckout.js"></script>
       <% } else { %>
         <p><a href="/login">Log in</a> to book this stay.</p>
       <% } %>
