@@ -1,18 +1,84 @@
 /* ============================================
-   StayScape design tokens - "arriving at dusk"
+   StayScape design tokens
+   "arriving at dusk" (dark) / "arriving at dawn" (light)
    ============================================ */
+
 :root {
+  /* dark theme = default */
   --bg: #12141c;
   --surface: #1a1d28;
   --surface-raised: #232838;
   --border: #2d3244;
   --text: #f1ede2;
   --text-muted: #9297ac;
+
   --accent: #e3a25d;
   --accent-hover: #edb173;
+  --accent-rgb: 227, 162, 93;
+
   --accent-2: #c15c74;
   --accent-2-hover: #d1728a;
+  --accent-2-rgb: 193, 92, 116;
+
+  /* text color to use ON TOP of accent-colored buttons/badges */
+  --on-accent: #171310;
+
+  /* translucent navbar background */
+  --nav-bg: rgba(18, 20, 28, 0.85);
+
   --radius: 1rem;
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #faf6ee;
+  --surface: #ffffff;
+  --surface-raised: #f4ede0;
+  --border: #e3dac8;
+  --text: #241f19;
+  --text-muted: #6f6558;
+
+  --accent: #b6642f;
+  --accent-hover: #9c5427;
+  --accent-rgb: 182, 100, 47;
+
+  --accent-2: #93394f;
+  --accent-2-hover: #7c2d40;
+  --accent-2-rgb: 147, 57, 79;
+
+  --on-accent: #fdf8f0;
+
+  --nav-bg: rgba(250, 246, 238, 0.85);
+
+  color-scheme: light;
+}
+
+/* Smooth, deliberate crossfade when the theme changes - not per-hover motion */
+body,
+.navbar,
+.listing-card,
+.form-control,
+.form-select,
+.search-input,
+.btn-dark,
+.add-btn,
+.edit-btn,
+.btn-outline-dark,
+.btn-outline-danger,
+.f-info,
+.list-group-item,
+.show-card,
+#map,
+.theme-toggle-btn {
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
 
 body {
@@ -42,11 +108,11 @@ a:hover {
   flex: 1;
 }
 
-/* Navbar - translucent dark glass bar */
+/* Navbar - translucent glass bar */
 
 .navbar {
   height: 5rem;
-  background-color: rgba(18, 20, 28, 0.85) !important;
+  background-color: var(--nav-bg) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border) !important;
 }
@@ -84,6 +150,48 @@ a:hover {
   border-color: var(--border) !important;
 }
 
+/* Theme toggle button */
+
+.theme-toggle-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-icon-sun,
+.theme-icon-moon {
+  display: none;
+  font-size: 1rem;
+}
+
+/* dark mode: show sun (click to go light) */
+[data-theme="dark"] .theme-icon-sun {
+  display: inline-block;
+}
+/* light mode: show moon (click to go dark) */
+[data-theme="light"] .theme-icon-moon {
+  display: inline-block;
+}
+
 /* Search bar */
 
 .search-input {
@@ -101,7 +209,7 @@ a:hover {
 
 .search-btn {
   background-color: var(--accent) !important;
-  color: var(--bg) !important;
+  color: var(--on-accent) !important;
   display: flex;
   align-items: center;
   border-radius: 25px;
@@ -112,7 +220,7 @@ a:hover {
 
 .search-btn:hover {
   background-color: var(--accent-hover) !important;
-  color: var(--bg) !important;
+  color: var(--on-accent) !important;
 }
 
 .search-btn i {
@@ -170,12 +278,13 @@ a:hover {
   background-color: var(--surface);
   border-radius: var(--radius);
   margin-bottom: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.25s ease;
 }
 
 .listing-card:hover {
   border-color: var(--accent) !important;
-  box-shadow: 0 0 24px rgba(227, 162, 93, 0.15);
+  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.15);
 }
 
 .card-img-top {
@@ -225,7 +334,7 @@ a:hover {
 .edit-btn {
   background-color: var(--accent) !important;
   border: none !important;
-  color: var(--bg) !important;
+  color: var(--on-accent) !important;
   font-weight: 600;
   border-radius: 999px !important;
 }
@@ -234,7 +343,7 @@ a:hover {
 .add-btn:hover,
 .edit-btn:hover {
   background-color: var(--accent-hover) !important;
-  color: var(--bg) !important;
+  color: var(--on-accent) !important;
 }
 
 .btn-outline-dark {
@@ -246,7 +355,7 @@ a:hover {
 
 .btn-outline-dark:hover {
   background-color: var(--accent) !important;
-  color: var(--bg) !important;
+  color: var(--on-accent) !important;
 }
 
 /* Wishlist button uses the second accent - meaningful, not decorative */
@@ -260,7 +369,7 @@ a:hover {
 
 .btn-outline-danger:hover {
   background-color: var(--accent-2) !important;
-  color: var(--text) !important;
+  color: var(--on-accent) !important;
   border-color: var(--accent-2) !important;
 }
 
@@ -282,7 +391,7 @@ a:hover {
   background-color: var(--surface) !important;
   border-color: var(--accent) !important;
   color: var(--text) !important;
-  box-shadow: 0 0 0 0.2rem rgba(227, 162, 93, 0.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--accent-rgb), 0.25) !important;
 }
 
 .form-label {
@@ -293,13 +402,13 @@ a:hover {
 /* Alerts / flash messages */
 
 .alert-success {
-  background-color: rgba(227, 162, 93, 0.12) !important;
+  background-color: rgba(var(--accent-rgb), 0.12) !important;
   border: 1px solid var(--accent) !important;
   color: var(--text) !important;
 }
 
 .alert-danger {
-  background-color: rgba(193, 92, 116, 0.12) !important;
+  background-color: rgba(var(--accent-2-rgb), 0.12) !important;
   border: 1px solid var(--accent-2) !important;
   color: var(--text) !important;
 }

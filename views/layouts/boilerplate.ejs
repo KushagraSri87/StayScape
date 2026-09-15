@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StayScape</title>
 
+    <!--
+      Runs before any CSS is applied, so the page never flashes the
+      wrong theme on load. Reads the saved choice, or falls back to
+      the visitor's OS preference the first time they show up.
+    -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem("stayscape-theme");
+        var theme =
+          saved ||
+          (window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+
     <link rel="stylesheet" href="/css/style.css" />
 
     <link
@@ -36,7 +54,7 @@
       rel="stylesheet"
     />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script> 
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <link rel="stylesheet" href="/css/rating.css" />
   </head>
@@ -56,5 +74,6 @@
     ></script>
 
     <script src="/js/script.js"></script>
+    <script src="/js/theme.js"></script>
   </body>
 </html>
