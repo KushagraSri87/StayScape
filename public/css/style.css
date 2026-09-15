@@ -1,39 +1,135 @@
+/* ============================================
+   StayScape design tokens - "arriving at dusk"
+   ============================================ */
+:root {
+  --bg: #12141c;
+  --surface: #1a1d28;
+  --surface-raised: #232838;
+  --border: #2d3244;
+  --text: #f1ede2;
+  --text-muted: #9297ac;
+  --accent: #e3a25d;
+  --accent-hover: #edb173;
+  --accent-2: #c15c74;
+  --accent-2-hover: #d1728a;
+  --radius: 1rem;
+}
+
 body {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-family: "Work Sans", sans-serif !important;
+  background-color: var(--bg);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
 }
 
 .container {
   flex: 1;
 }
 
-/* Navbar */
+/* Navbar - translucent dark glass bar */
 
 .navbar {
   height: 5rem;
-  background-color: white;
+  background-color: rgba(18, 20, 28, 0.85) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar-brand .brand-word {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
 }
 
 .fa-compass {
-  color: #fe424d;
-  font-size: 2rem;
+  color: var(--accent);
+  font-size: 1.8rem;
 }
 
 .nav-link {
-  color: #222222 !important;
+  color: var(--text) !important;
+  opacity: 0.85;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  color: var(--accent) !important;
+}
+
+.navbar-toggler {
+  border-color: var(--border) !important;
+}
+
+/* Search bar */
+
+.search-input {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-btn {
+  background-color: var(--accent) !important;
+  color: var(--bg) !important;
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  padding: 0 1rem 0 1rem;
+  border: none !important;
+  font-weight: 600;
+}
+
+.search-btn:hover {
+  background-color: var(--accent-hover) !important;
+  color: var(--bg) !important;
+}
+
+.search-btn i {
+  display: inline;
+  margin-right: 0.5rem;
 }
 
 /* Footer */
 
 .f-info-links a {
   text-decoration: none;
-  color: #222222;
+  color: var(--text-muted);
 }
 
 .f-info-links a:hover {
   text-decoration: underline;
+  color: var(--accent);
 }
 
 .f-info-links,
@@ -48,44 +144,71 @@ body {
 .f-info-socials i {
   font-size: 1.2rem;
   margin-right: 1.1rem;
+  color: var(--text-muted);
+}
+
+.f-info-brand {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .f-info {
   height: 8rem;
   display: flex;
-  background-color: #ebebeb;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
   flex-wrap: wrap;
   justify-content: center;
   align-items: space-evenly;
   text-align: center;
 }
 
-/* Cards */
+/* Cards - warm-tinted border + glow on hover instead of grey shadow */
 
 .listing-card {
-  border: none !important;
+  border: 1px solid var(--border) !important;
+  background-color: var(--surface);
+  border-radius: var(--radius);
   margin-bottom: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 24px rgba(227, 162, 93, 0.15);
 }
 
 .card-img-top {
-  border-radius: 1rem !important;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
   width: 100% !important;
   object-fit: cover !important;
 }
 
+.show-card .card-img-top {
+  border-radius: var(--radius) !important;
+}
+
 .card-body {
-  padding: 0 !important;
+  padding: 0.9rem !important;
+}
+
+.card-text {
+  color: var(--text) !important;
 }
 
 .card-text p {
   font-weight: 400 !important;
 }
 
-.listing-link {
-  text-decoration: none !important;
+.text-muted {
+  color: var(--text-muted) !important;
 }
 
-/* Card effect */
+.listing-link {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 .card-img-overlay {
   opacity: 0;
 }
@@ -95,24 +218,98 @@ body {
   background-color: white;
 }
 
-/* Create */
+/* Buttons */
 
-.add-btn {
-  background-color: #fe424d !important;
+.btn-dark,
+.add-btn,
+.edit-btn {
+  background-color: var(--accent) !important;
   border: none !important;
+  color: var(--bg) !important;
+  font-weight: 600;
+  border-radius: 999px !important;
+}
+
+.btn-dark:hover,
+.add-btn:hover,
+.edit-btn:hover {
+  background-color: var(--accent-hover) !important;
+  color: var(--bg) !important;
+}
+
+.btn-outline-dark {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  border-radius: 999px !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--accent) !important;
+  color: var(--bg) !important;
+}
+
+/* Wishlist button uses the second accent - meaningful, not decorative */
+
+.btn-outline-danger {
+  border-color: var(--accent-2) !important;
+  color: var(--accent-2) !important;
+  border-radius: 999px !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--accent-2) !important;
+  color: var(--text) !important;
+  border-color: var(--accent-2) !important;
+}
+
+/* Forms / inputs */
+
+.form-control,
+.form-select {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--surface) !important;
+  border-color: var(--accent) !important;
+  color: var(--text) !important;
+  box-shadow: 0 0 0 0.2rem rgba(227, 162, 93, 0.25) !important;
+}
+
+.form-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Alerts / flash messages */
+
+.alert-success {
+  background-color: rgba(227, 162, 93, 0.12) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--text) !important;
+}
+
+.alert-danger {
+  background-color: rgba(193, 92, 116, 0.12) !important;
+  border: 1px solid var(--accent-2) !important;
+  color: var(--text) !important;
 }
 
 /* Edit Page */
 
-.edit-btn {
-  background-color: #fe424d !important;
-  border: none !important;
-}
-
 .edit-img {
   height: 140px;
   width: 250px;
-  border-radius: 1rem;
+  border-radius: var(--radius);
 }
 
 /* Show Page */
@@ -128,11 +325,24 @@ body {
 .show-card {
   padding-left: 0%;
   padding-right: 0%;
+  background-color: var(--surface);
+  border: 1px solid var(--border) !important;
+}
+
+/* List groups (booking lists) */
+
+.list-group-item {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
 }
 
 /* Maps */
 
 #map {
   height: 60vh;
-  width: 100vh;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
