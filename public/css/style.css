@@ -274,12 +274,15 @@ a:hover {
 /* Cards - warm-tinted border + glow on hover instead of grey shadow */
 
 .listing-card {
+  .card,
+  .listing-card {
   border: 1px solid var(--border) !important;
   background-color: var(--surface);
   border-radius: var(--radius);
   margin-bottom: 1rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease,
     background-color 0.25s ease;
+}
 }
 
 .listing-card:hover {
