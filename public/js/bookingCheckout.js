@@ -27,7 +27,7 @@ document.getElementById("book-now-btn").addEventListener("click", async () => {
       key: orderData.keyId,
       amount: orderData.amount,
       currency: "INR",
-      name: "WanderLust",
+      name: "StayScape",
       description: `${orderData.nights} night(s) at ${orderData.listingTitle}`,
       order_id: orderData.orderId,
       handler: async function (response) {
