@@ -63,53 +63,53 @@
 </style>
 
 <div id="filters">
-    <div class="filter" data-tooltip="Coming soon"
-    <div ><i class="fa-solid fa-fire"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-bed"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-bed"></i></div>
     <p>Home</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-mountain-city"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
     <p>Iconic cities</p>
   </div>
-  
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-brands fa-fort-awesome"></i></div>
+
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
     <p>Castles</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-person-swimming"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
     <p>Amazing pools</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-campground"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-campground"></i></div>
     <p>Camping</p>
   </div>
-  
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-cow"></i></div>
+
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-cow"></i></div>
     <p>Farms</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-snowman"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-snowman"></i></div>
     <p>Arctic</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-igloo"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-igloo"></i></div>
     <p>Domes</p>
   </div>
 
-    <div class="filter" data-tooltip="Coming soon">
-    <div ><i class="fa-solid fa-ship"></i></div>
+  <div class="filter" data-tooltip="Coming soon">
+    <div><i class="fa-solid fa-ship"></i></div>
     <p>Boats</p>
   </div>
 
@@ -133,8 +133,6 @@
         style="height: 20rem"
       />
 
-      
-
       <div class="card-body">
         <p class="card-text">
           <b> <%= listing.title %> </b> <br />
@@ -153,13 +151,12 @@
   let taxSwitch = document.getElementById("switchCheckDefault");
   taxSwitch.addEventListener("click", ()=> {
     let taxInfo = document.getElementsByClassName("tax-info");
-    for(info of taxInfo){
+    for(let info of taxInfo){
       if(info.style.display != "inline"){
         info.style.display = "inline";
       }else{
         info.style.display = "none";
       }
-      
     }
   });
 </script>
