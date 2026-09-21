@@ -5,6 +5,7 @@ if (process.env.NODE_ENV != "production") {
 
 const express = require("express");
 const app = express();
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override"); // npm i method-override
@@ -44,6 +45,15 @@ async function main() {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(
+  helmet({
+    // CSP disabled: a strict default policy would block Razorpay's checkout
+    // iframe/scripts, Cloudinary-hosted images, Google Fonts, and Leaflet's
+    // tile/script CDN unless each is individually allow-listed. Keeping
+    // helmet's other protections (clickjacking, MIME-sniffing, etc.) active.
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
