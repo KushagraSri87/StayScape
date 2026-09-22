@@ -1,0 +1,32 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="row">
+  <div class="col-10 offset-1 mt-3">
+    <h3>Incoming Bookings</h3>
+    <p class="text-muted">Every booking received across all your listings.</p>
+
+    <% if(bookings.length === 0) { %>
+      <p class="text-muted">No bookings yet across any of your listings.</p>
+    <% } else { %>
+      <% for(let b of bookings) { %>
+        <div class="card mb-3">
+          <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+              <h5 class="card-title mb-1">
+                <a href="/listings/<%= b.listing._id %>"><%= b.listing.title %></a>
+              </h5>
+              <p class="card-text mb-0">
+                Guest: <b>@<%= b.guest.username %></b>
+              </p>
+              <p class="card-text mb-0">
+                <%= b.checkIn.toDateString() %> &rarr; <%= b.checkOut.toDateString() %>
+                (<%= b.nights %> night<%= b.nights > 1 ? "s" : "" %>)
+              </p>
+              <p class="card-text text-muted">&#8377; <%= b.totalPrice.toLocaleString("en-IN") %> total</p>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</div>
