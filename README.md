@@ -1,7 +1,4 @@
-bash
 
-cat /tmp/readme-check/README.md
-Output
 
 # 🏡 StayScape
 
