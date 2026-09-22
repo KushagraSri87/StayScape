@@ -119,6 +119,24 @@ module.exports.myBookings = async (req, res) => {
   res.render("bookings/index.ejs", { bookings });
 };
 
+// Everything a host has received, across every listing they own - not just
+// one listing at a time (that view already exists on each listing's own
+// show page). This is the missing "host dashboard" piece.
+module.exports.incomingBookings = async (req, res) => {
+  let ownedListings = await Listing.find({ owner: req.user._id }).select(
+    "_id",
+  );
+  let ownedListingIds = ownedListings.map((l) => l._id);
+
+  let bookings = await Booking.find({ listing: { $in: ownedListingIds } })
+    .populate("listing")
+    .populate("guest")
+    .sort({ checkIn: 1 });
+  bookings = bookings.filter((b) => b.listing && b.guest);
+
+  res.render("bookings/incoming.ejs", { bookings });
+};
+
 module.exports.cancelBooking = async (req, res) => {
   let { bookingId } = req.params;
   await Booking.findByIdAndDelete(bookingId);
