@@ -19,11 +19,6 @@
         </form>
       </div>
 
-      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch between dark and light mode">
-        <i class="fa-solid fa-sun theme-icon-sun"></i>
-        <i class="fa-solid fa-moon theme-icon-moon"></i>
-      </button>
-
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new"> Stayscape your home </a>
         <!-- ms(margin start) auto -- shifts right  -->
@@ -36,6 +31,10 @@
           <a class="nav-link" href="/bookings">My Trips</a>
           <a class="nav-link" href="/logout">Log out </a>
         <% } %>
+        <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch between dark and light mode">
+          <i class="fa-solid fa-sun theme-icon-sun"></i>
+          <i class="fa-solid fa-moon theme-icon-moon"></i>
+        </button>
         <!-- when you not logged in req.user stores undefined, if logged in it stores users info. -->
 
       </div>

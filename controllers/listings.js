@@ -124,11 +124,25 @@ module.exports.destroyListing = async (req, res) => {
   res.redirect("/listings");
 };
 
+// Escapes regex special characters so a search term like "C++" or "(test)"
+// can't break the query or be used for a regex-injection attack.
+function escapeRegex(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 module.exports.searchByCountry = async (req, res) => {
-  let searchedCountry = req.query.country;
-  const allListings = await Listing.find({ country: searchedCountry });
+  let searchTerm = req.query.country;
+  let safeTerm = escapeRegex(searchTerm);
+  // Matches against location (city/state, e.g. "Goa") OR country (e.g.
+  // "India"), case-insensitive, partial match - not just an exact country match.
+  const allListings = await Listing.find({
+    $or: [
+      { location: { $regex: safeTerm, $options: "i" } },
+      { country: { $regex: safeTerm, $options: "i" } },
+    ],
+  });
   if (!allListings.length) {
-    req.flash("error", "Not any listing available for your country");
+    req.flash("error", `No listings found for "${searchTerm}"`);
     return res.redirect("/listings");
   }
   res.render("listings/index.ejs", { allListings });
