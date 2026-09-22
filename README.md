@@ -2,6 +2,8 @@
 
 A full-stack, Airbnb-style travel listing app. Users can sign up, list a place to stay, upload photos, leave reviews, and now **book real date ranges** with server-side availability checking.
 
+Stayscape Live Site - https://stayscape-a0fz.onrender.com
+
 ## ✨ Features
 
 - **Auth** — signup/login/logout via Passport.js (`passport-local-mongoose`), sessions stored in MongoDB
