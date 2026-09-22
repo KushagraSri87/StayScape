@@ -6,6 +6,12 @@ const bookingController = require("../controllers/bookings.js");
 
 router.get("/", isLoggedIn, wrapAsync(bookingController.myBookings));
 
+router.get(
+  "/incoming",
+  isLoggedIn,
+  wrapAsync(bookingController.incomingBookings),
+);
+
 router.delete(
   "/:bookingId",
   isLoggedIn,
