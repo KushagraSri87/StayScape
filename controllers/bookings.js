@@ -115,6 +115,7 @@ module.exports.myBookings = async (req, res) => {
   let bookings = await Booking.find({ guest: req.user._id })
     .populate("listing")
     .sort({ checkIn: 1 });
+  bookings = bookings.filter((b) => b.listing);
   res.render("bookings/index.ejs", { bookings });
 };
 
